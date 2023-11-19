@@ -1,0 +1,11 @@
+ul {
+    list-style-type: none;
+}
+
+.font {
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.color {
+    color: red;
+}
