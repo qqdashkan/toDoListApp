@@ -5,19 +5,6 @@ const taskList = document.querySelector('.collection');
 const clearBtn = document.querySelector('.clear-tasks');
 const form = document.querySelector('.create-task-form');
 
-const addBtn = document.querySelector('.btn');
-const containerBody = document.querySelector('.container');
-
-taskList.classList.add('font');
-containerBody.style.margin = '50px';
-addBtn.style.marginTop = '20px';
-
-
-const titles = document.getElementsByTagName('h3');
-for (let title of titles) {
-    title.classList.add('font');
-
-}
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -30,19 +17,23 @@ form.addEventListener('submit', (event) => {
     storeTaskInLocalStorage(taskInput.value);
 
     form.reset();
-})
+});
 
 document.addEventListener('DOMContentLoaded', renderTasks);
 
 taskList.addEventListener('mouseover', (event) => {
     let target = event.target.closest('li');
-    if(!target) return;
+    if(!target) {
+        return;
+    }
     target.classList.toggle('color');      
 });
 
 taskList.addEventListener('mouseout', (event) => {
     let target = event.target.closest('li');
-    if(!target) return;
+    if(!target) {
+    return;
+    }
     target.classList.toggle('color'); 
 });
 
@@ -53,7 +44,7 @@ taskList.addEventListener('click', (event) => {
         iconContainer.parentElement.setAttribute('status', 'delete');
  
         if (confirm('Are you sure?')) {
-            let tasks = Array.from(document.querySelectorAll('.collection-item'))
+            let tasks = Array.from(document.querySelectorAll('.collection-item'));
             iconContainer.parentElement.remove();
 
         tasks.forEach((task, index) => {
@@ -63,35 +54,30 @@ taskList.addEventListener('click', (event) => {
         });
 
         const newTaskList = tasks.map(task => task.textContent);
-        localStorage.setItem('tasks', JSON.stringify(newTaskList))
-
+        localStorage.setItem('tasks', JSON.stringify(newTaskList));
         }
     }
 
     if (iconContainer.classList.contains('edit-element')) {
-            let newTask = window.prompt('New name', iconContainer.parentElement.textContent);
-
-            if (newTask === null){
+        let newTask = window.prompt('New name', iconContainer.parentElement.textContent);
+            if (newTask === null) {
                 return;
             }
+
             iconContainer.parentElement.innerHTML = newTask;
 
             let tasks = Array.from(document.querySelectorAll('.collection-item'));
             const newTaskList = tasks.map(task => task.textContent);
             localStorage.setItem('tasks', JSON.stringify(newTaskList));
-        }
-
-
+    }
 })
-
 
 clearBtn.addEventListener('click', () => {
     if(confirm('Are you sure?')){
         localStorage.clear();
         taskList.innerHTML = '';
     }
-})
-
+});
 
 function createSingleTaskElement(newTask) {
 const li = document.createElement('li');
